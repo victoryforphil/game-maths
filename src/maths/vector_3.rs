@@ -1,6 +1,6 @@
 use std::{
     fmt::Debug,
-    ops::{Index, IndexMut, Mul, DivAssign, MulAssign, Div},
+    ops::{Index, IndexMut, Mul, DivAssign, MulAssign, Div, Add, Sub},
 };
 
 #[derive(Clone, Copy)]
@@ -28,18 +28,6 @@ impl Debug for Vector3D {
             .field("y", &self.y)
             .field("z", &self.z)
             .finish()
-    }
-}
-
-impl Index<usize> for Vector3D {
-    type Output = f64;
-    fn index(&self, index: usize) -> &Self::Output {
-        match index {
-            0 => &self.x,
-            1 => &self.y,
-            2 => &self.z,
-            _ => panic!("Index out of bounds for Vector3D"),
-        }
     }
 }
 
@@ -97,6 +85,18 @@ impl IndexMut<usize> for Vector3D {
             0 => &mut self.x,
             1 => &mut self.y,
             2 => &mut self.z,
+            _ => panic!("Index out of bounds for Vector3D"),
+        }
+    }
+}
+
+impl Index<usize> for Vector3D {
+    type Output = f64;
+    fn index(&self, index: usize) -> &Self::Output {
+        match index {
+            0 => &self.x,
+            1 => &self.y,
+            2 => &self.z,
             _ => panic!("Index out of bounds for Vector3D"),
         }
     }
@@ -162,6 +162,49 @@ impl DivAssign<f64> for Vector3D {
         self.z /= s;
     }
 }
+
+/// Vector addition for Vector3D
+/// 
+/// # Example
+/// ```
+/// use game_maths::maths::Vector3D;
+/// 
+/// let vector_3d = Vector3D::new(1.0, 2.0, 3.0);
+/// let vector_3d = vector_3d + Vector3D::new(1.0, 2.0, 3.0);
+/// assert_eq!(vector_3d, [2.0, 4.0, 6.0].into());
+/// ```
+impl Add<Vector3D> for Vector3D {
+    type Output = Self;
+    fn add(self, other: Self) -> Self::Output {
+        // S = scalar
+        Self {
+            x: self.x + other.x,
+            y: self.y + other.y,
+            z: self.z + other.z,
+        }
+    }
+}
+/// Vector subtraction for Vector3D
+/// 
+/// # Example
+/// ```
+/// use game_maths::maths::Vector3D;
+/// 
+/// let vector_3d = Vector3D::new(1.0, 2.0, 3.0);
+/// let vector_3d = vector_3d - Vector3D::new(1.0, 2.0, 3.0);
+/// assert_eq!(vector_3d, [0.0, 0.0, 0.0].into());
+/// ```
+impl Sub<Vector3D> for Vector3D {
+    type Output = Self;
+    fn sub(self, other: Self) -> Self::Output {
+        // S = scalar
+        Self {
+            x: self.x - other.x,
+            y: self.y - other.y,
+            z: self.z - other.z,
+        }
+    }
+}
 impl Vector3D {
     /// Creates a new Vector3D
     ///
@@ -218,6 +261,39 @@ impl Vector3D {
             x: array[0],
             y: array[1],
             z: array[2],
+        }
+    }
+    /// Returns the magnitude of the Vector3D
+    /// 
+    /// # Example
+    /// ```
+    /// use game_maths::maths::Vector3D;
+    /// 
+    /// let vector_3d = Vector3D::new(1.0, 2.0, 3.0);
+    /// assert_eq!(vector_3d.magnitude(), 3.7416573867739413);
+    /// ```
+    pub fn magnitude(&self) -> f64 {
+        (self.x.powi(2) + self.y.powi(2) + self.z.powi(2)).sqrt()
+    }
+
+    /// Returns the normalised Vector3D
+    /// 
+    /// # Example
+    /// ```
+    /// use game_maths::maths::Vector3D;
+    /// 
+    /// let vector_3d = Vector3D::new(2.0, 2.0, 1.0);
+    /// 
+    /// let normalised_vector_3d = vector_3d.normalise();
+    /// assert_eq!(normalised_vector_3d, [0.6666666666666666, 0.6666666666666666, 0.3333333333333333].into());
+    /// assert_eq!(normalised_vector_3d.magnitude(), 1.0);
+    /// ```
+    pub fn normalise(&self) -> Self {
+        let magnitude = self.magnitude();
+        Self {
+            x: self.x / magnitude,
+            y: self.y / magnitude,
+            z: self.z / magnitude,
         }
     }
 }
@@ -300,5 +376,26 @@ mod tests {
         assert_eq!(vector_3d, [0.5, 1.0, 1.5].into());
         vector_3d /= 2.0;
         assert_eq!(vector_3d, [0.25, 0.5, 0.75].into());
+
+        // Magnitude
+        let vector_3d = Vector3D::new(1.0, 2.0, 3.0);
+        assert_eq!(vector_3d.magnitude(), 3.7416573867739413);
+
+        // Normalise
+        let vector_3d = Vector3D::new(2.0, 2.0, 1.0);
+        let normalised_vector_3d = vector_3d.normalise();
+        assert_eq!(normalised_vector_3d, [0.6666666666666666, 0.6666666666666666, 0.3333333333333333].into());
+        assert_eq!(normalised_vector_3d.magnitude(), 1.0);
+    }
+
+    #[test]
+    fn test_vector_3d_add_sub() {
+        let vector_3d = Vector3D::new(1.0, 2.0, 3.0);
+        let vector_3d = vector_3d + Vector3D::new(1.0, 2.0, 3.0);
+        assert_eq!(vector_3d, [2.0, 4.0, 6.0].into());
+
+        let vector_3d = Vector3D::new(1.0, 2.0, 3.0);
+        let vector_3d = vector_3d - Vector3D::new(1.0, 2.0, 3.0);
+        assert_eq!(vector_3d, [0.0, 0.0, 0.0].into());
     }
 }
