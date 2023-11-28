@@ -24,3 +24,13 @@ fn main() {
         info!("Game Maths: {:?}", t_vec);
     info!("Game Maths: Hello world!")
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_main() {
+        main();
+    }
+}

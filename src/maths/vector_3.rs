@@ -224,14 +224,19 @@ impl Vector3D {
 
 #[cfg(test)]
 mod tests {
+    use log::info;
+
     use super::*;
 
     #[test]
     fn test_vector_3d() {
         let vector_3d = Vector3D::new(1.0, 2.0, 3.0);
-        assert_eq!(vector_3d.x, 1.0);
-        assert_eq!(vector_3d.y, 2.0);
-        assert_eq!(vector_3d.z, 3.0);
+        assert_eq!(vector_3d, [1.0, 2.0, 3.0].into());
+
+        let vector_3d = Vector3D::default();
+        assert_eq!(vector_3d, [0.0, 0.0, 0.0].into());
+
+        info!("Game Maths: {:?}", vector_3d);
     }
 
     #[test]
@@ -285,11 +290,15 @@ mod tests {
     #[test]
     fn test_vector_3d_scalar() {
         let vector_3d = Vector3D::new(1.0, 2.0, 3.0);
-        let vector_3d = vector_3d * 2.0;
+        let mut vector_3d = vector_3d * 2.0;
         assert_eq!(vector_3d, [2.0, 4.0, 6.0].into());
+        vector_3d *= 2.0;
+        assert_eq!(vector_3d, [4.0, 8.0, 12.0].into());
 
         let vector_3d = Vector3D::new(1.0, 2.0, 3.0);
-        let vector_3d = vector_3d / 2.0;
+        let mut vector_3d = vector_3d / 2.0;
         assert_eq!(vector_3d, [0.5, 1.0, 1.5].into());
+        vector_3d /= 2.0;
+        assert_eq!(vector_3d, [0.25, 0.5, 0.75].into());
     }
 }
