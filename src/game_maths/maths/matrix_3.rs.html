@@ -170,6 +170,26 @@
 <a href="#170" id="170">170</a>
 <a href="#171" id="171">171</a>
 <a href="#172" id="172">172</a>
+<a href="#173" id="173">173</a>
+<a href="#174" id="174">174</a>
+<a href="#175" id="175">175</a>
+<a href="#176" id="176">176</a>
+<a href="#177" id="177">177</a>
+<a href="#178" id="178">178</a>
+<a href="#179" id="179">179</a>
+<a href="#180" id="180">180</a>
+<a href="#181" id="181">181</a>
+<a href="#182" id="182">182</a>
+<a href="#183" id="183">183</a>
+<a href="#184" id="184">184</a>
+<a href="#185" id="185">185</a>
+<a href="#186" id="186">186</a>
+<a href="#187" id="187">187</a>
+<a href="#188" id="188">188</a>
+<a href="#189" id="189">189</a>
+<a href="#190" id="190">190</a>
+<a href="#191" id="191">191</a>
+<a href="#192" id="192">192</a>
 </pre></div><pre class="rust"><code><span class="kw">use </span>std::{fmt::{Debug, Formatter, <span class="self">self</span>}, ops::{IndexMut, Index}};
 
 <span class="kw">use </span><span class="kw">super</span>::Vector3D;
@@ -201,27 +221,11 @@
 
 <span class="kw">impl </span>Debug <span class="kw">for </span>Matrix3D {
     <span class="kw">fn </span>fmt(<span class="kw-2">&amp;</span><span class="self">self</span>, f: <span class="kw-2">&amp;mut </span>Formatter&lt;<span class="lifetime">&#39;_</span>&gt;) -&gt; fmt::Result {
-        <span class="doccomment">/// Print matrix in row major order
-        /// [ 0 1 2 ]
-        /// [ 3 4 5 ]
-        /// [ 6 7 8 ]
-        /// 
-        </span><span class="comment">//TODO: Make this a dynamic utility function (AlexC / victoryforphil)
-        </span><span class="macro">write!</span>(f, <span class="string">&quot;\n[ &quot;</span>)<span class="question-mark">?</span>;
-        <span class="macro">write!</span>(f, <span class="string">&quot;{} &quot;</span>, <span class="self">self</span>.n[<span class="number">0</span>][<span class="number">0</span>])<span class="question-mark">?</span>;
-        <span class="macro">write!</span>(f, <span class="string">&quot;{} &quot;</span>, <span class="self">self</span>.n[<span class="number">0</span>][<span class="number">1</span>])<span class="question-mark">?</span>;
-        <span class="macro">write!</span>(f, <span class="string">&quot;{} &quot;</span>, <span class="self">self</span>.n[<span class="number">0</span>][<span class="number">2</span>])<span class="question-mark">?</span>;
-        <span class="macro">write!</span>(f, <span class="string">&quot;]\n&quot;</span>)<span class="question-mark">?</span>;
-        <span class="macro">write!</span>(f, <span class="string">&quot;[ &quot;</span>)<span class="question-mark">?</span>;
-        <span class="macro">write!</span>(f, <span class="string">&quot;{} &quot;</span>, <span class="self">self</span>.n[<span class="number">1</span>][<span class="number">0</span>])<span class="question-mark">?</span>;
-        <span class="macro">write!</span>(f, <span class="string">&quot;{} &quot;</span>, <span class="self">self</span>.n[<span class="number">1</span>][<span class="number">1</span>])<span class="question-mark">?</span>;
-        <span class="macro">write!</span>(f, <span class="string">&quot;{} &quot;</span>, <span class="self">self</span>.n[<span class="number">1</span>][<span class="number">2</span>])<span class="question-mark">?</span>;
-        <span class="macro">write!</span>(f, <span class="string">&quot;]\n&quot;</span>)<span class="question-mark">?</span>;
-        <span class="macro">write!</span>(f, <span class="string">&quot;[ &quot;</span>)<span class="question-mark">?</span>;
-        <span class="macro">write!</span>(f, <span class="string">&quot;{} &quot;</span>, <span class="self">self</span>.n[<span class="number">2</span>][<span class="number">0</span>])<span class="question-mark">?</span>;
-        <span class="macro">write!</span>(f, <span class="string">&quot;{} &quot;</span>, <span class="self">self</span>.n[<span class="number">2</span>][<span class="number">1</span>])<span class="question-mark">?</span>;
-        <span class="macro">write!</span>(f, <span class="string">&quot;{} &quot;</span>, <span class="self">self</span>.n[<span class="number">2</span>][<span class="number">2</span>])<span class="question-mark">?</span>;
-        <span class="macro">write!</span>(f, <span class="string">&quot;]&quot;</span>)<span class="question-mark">?</span>;
+        <span class="comment">//TODO: Make this a dynamic utility function (AlexC / victoryforphil)
+        </span><span class="macro">write!</span>(f, <span class="string">&quot; Row: \t \t Col (mem):\n\t [{:?} {:?} {:?}] \t [{:?} {:?} {:?}]  \n&quot;</span>, <span class="self">self</span>[(<span class="number">0</span>,<span class="number">0</span>)], <span class="self">self</span>[(<span class="number">0</span>,<span class="number">1</span>)], <span class="self">self</span>[(<span class="number">0</span>,<span class="number">2</span>)], <span class="self">self</span>.n[<span class="number">0</span>][<span class="number">0</span>], <span class="self">self</span>.n[<span class="number">0</span>][<span class="number">1</span>],  <span class="self">self</span>.n[<span class="number">0</span>][<span class="number">2</span>])<span class="question-mark">?</span>;
+        <span class="macro">write!</span>(f, <span class="string">&quot;\t [{:?} {:?} {:?}] \t [{:?} {:?} {:?}] \n&quot;</span>, <span class="self">self</span>[(<span class="number">1</span>,<span class="number">0</span>)], <span class="self">self</span>[(<span class="number">1</span>,<span class="number">1</span>)], <span class="self">self</span>[(<span class="number">1</span>,<span class="number">2</span>)], <span class="self">self</span>.n[<span class="number">1</span>][<span class="number">0</span>], <span class="self">self</span>.n[<span class="number">1</span>][<span class="number">1</span>],  <span class="self">self</span>.n[<span class="number">1</span>][<span class="number">2</span>])<span class="question-mark">?</span>;
+        <span class="macro">write!</span>(f, <span class="string">&quot;\t [{:?} {:?} {:?}] \t [{:?} {:?} {:?}] \n&quot;</span>, <span class="self">self</span>[(<span class="number">2</span>,<span class="number">0</span>)], <span class="self">self</span>[(<span class="number">2</span>,<span class="number">1</span>)], <span class="self">self</span>[(<span class="number">2</span>,<span class="number">2</span>)], <span class="self">self</span>.n[<span class="number">2</span>][<span class="number">0</span>], <span class="self">self</span>.n[<span class="number">0</span>][<span class="number">1</span>],  <span class="self">self</span>.n[<span class="number">2</span>][<span class="number">2</span>])<span class="question-mark">?</span>;
+
         <span class="prelude-val">Ok</span>(())
         
     }
@@ -250,13 +254,11 @@
     <span class="kw">pub fn </span>new( n00:f64,n01:f64,n02:f64,
                 n10:f64,n11:f64,n12:f64,
                 n20:f64,n21:f64,n22:f64) -&gt; <span class="self">Self </span>{
-        <span class="self">Self </span>{
-            n: [
-                [n00, n10, n20],
-                [n01, n11, n21],
-                [n02, n12, n22]
-            ]
-        }
+        <span class="kw">let </span><span class="kw-2">mut </span>m = <span class="self">Self</span>::default();
+        m.n[<span class="number">0</span>][<span class="number">0</span>] = n00; m.n[<span class="number">0</span>][<span class="number">1</span>] = n10; m.n[<span class="number">0</span>][<span class="number">2</span>] = n20;
+        m.n[<span class="number">1</span>][<span class="number">0</span>] = n01; m.n[<span class="number">1</span>][<span class="number">1</span>] = n11; m.n[<span class="number">1</span>][<span class="number">2</span>] = n21;
+        m.n[<span class="number">2</span>][<span class="number">0</span>] = n02; m.n[<span class="number">2</span>][<span class="number">1</span>] = n12; m.n[<span class="number">2</span>][<span class="number">2</span>] = n22;
+        m
     }
 
     <span class="doccomment">/// Create a matrix from 3 vectors
@@ -284,7 +286,7 @@
     /// ```
     </span><span class="kw">pub fn </span>new_vectors( v0:Vector3D,v1:Vector3D,v2:Vector3D) -&gt; <span class="self">Self </span>{
         <span class="kw">let </span><span class="kw-2">mut </span>m = <span class="self">Self</span>::default();
-        m.n[<span class="number">0</span>][<span class="number">0</span>] = v0.x; m.n[<span class="number">1</span>][<span class="number">0</span>] = v1.x; m.n[<span class="number">2</span>][<span class="number">0</span>] = v2.x;
+        m.n[<span class="number">0</span>][<span class="number">0</span>] = v0.x; m.n[<span class="number">0</span>][<span class="number">1</span>] = v0.y; m.n[<span class="number">0</span>][<span class="number">2</span>] = v0.z;
         m.n[<span class="number">1</span>][<span class="number">0</span>] = v1.x; m.n[<span class="number">1</span>][<span class="number">1</span>] = v1.y; m.n[<span class="number">1</span>][<span class="number">2</span>] = v1.z;
         m.n[<span class="number">2</span>][<span class="number">0</span>] = v2.x; m.n[<span class="number">2</span>][<span class="number">1</span>] = v2.y; m.n[<span class="number">2</span>][<span class="number">2</span>] = v2.z;
 
@@ -323,22 +325,60 @@
     </span><span class="kw">fn </span>test_matrix_3() {
         <span class="kw">let </span>matrix_3 = Matrix3D::default();
         <span class="macro">info!</span>(<span class="string">&quot;Game Maths: {:?}&quot;</span>, matrix_3);
+
+        <span class="kw">let </span>matrix_index = Matrix3D::index_test();
+        <span class="kw">let </span>matrix_new = Matrix3D::new(<span class="number">0.0</span>,<span class="number">1.0</span>,<span class="number">2.0</span>,
+                                       <span class="number">3.0</span>,<span class="number">4.0</span>,<span class="number">5.0</span>,
+                                       <span class="number">6.0</span>,<span class="number">7.0</span>,<span class="number">8.0</span>);
+        <span class="macro">assert_eq!</span>(matrix_index, matrix_new);
+    }
+
+    <span class="attr">#[test]
+    </span><span class="kw">fn </span>test_matrix_3_vector(){
+        <span class="kw">let </span>matrix_vectors = Matrix3D::new_vectors(
+            Vector3D::new(<span class="number">0.0</span>,<span class="number">1.0</span>,<span class="number">2.0</span>),
+            Vector3D::new(<span class="number">3.0</span>,<span class="number">4.0</span>,<span class="number">5.0</span>),
+            Vector3D::new(<span class="number">6.0</span>,<span class="number">7.0</span>,<span class="number">8.0</span>)
+        );
+        <span class="macro">assert_eq!</span>(matrix_vectors.n[<span class="number">0</span>], [<span class="number">0.0</span>,<span class="number">1.0</span>,<span class="number">2.0</span>]);
+        <span class="macro">assert_eq!</span>(matrix_vectors.n[<span class="number">1</span>], [<span class="number">3.0</span>,<span class="number">4.0</span>,<span class="number">5.0</span>]);
+        <span class="macro">assert_eq!</span>(matrix_vectors.n[<span class="number">2</span>], [<span class="number">6.0</span>,<span class="number">7.0</span>,<span class="number">8.0</span>]);
     }
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_matrix_3_order_test() {
-        <span class="kw">let </span>matrix_3 = Matrix3D::new(<span class="number">0.0</span>,<span class="number">1.0</span>,<span class="number">2.0</span>,
-                                     <span class="number">3.0</span>,<span class="number">4.0</span>,<span class="number">5.0</span>,
-                                     <span class="number">6.0</span>,<span class="number">7.0</span>,<span class="number">8.0</span>);
-
+        <span class="kw">let </span>matrix_3 = Matrix3D::index_test();
       
         <span class="macro">info!</span>(<span class="string">&quot;Game Maths: {:?}&quot;</span>, matrix_3);
+        <span class="comment">// Test that we store the matrix in column major order
+        </span><span class="macro">assert_eq!</span>(matrix_3.n[<span class="number">0</span>][<span class="number">0</span>], <span class="number">0.0</span>);
+        <span class="macro">assert_eq!</span>(matrix_3.n[<span class="number">1</span>][<span class="number">0</span>], <span class="number">1.0</span>);
         <span class="macro">assert_eq!</span>(matrix_3.n[<span class="number">2</span>][<span class="number">0</span>], <span class="number">2.0</span>);
+        <span class="macro">assert_eq!</span>(matrix_3.n[<span class="number">0</span>][<span class="number">1</span>], <span class="number">3.0</span>);
+        <span class="macro">assert_eq!</span>(matrix_3.n[<span class="number">1</span>][<span class="number">1</span>], <span class="number">4.0</span>);
+        <span class="macro">assert_eq!</span>(matrix_3.n[<span class="number">2</span>][<span class="number">1</span>], <span class="number">5.0</span>);
         <span class="macro">assert_eq!</span>(matrix_3.n[<span class="number">0</span>][<span class="number">2</span>], <span class="number">6.0</span>);
+        <span class="macro">assert_eq!</span>(matrix_3.n[<span class="number">1</span>][<span class="number">2</span>], <span class="number">7.0</span>);
+        <span class="macro">assert_eq!</span>(matrix_3.n[<span class="number">2</span>][<span class="number">2</span>], <span class="number">8.0</span>);
+
     }
     <span class="attr">#[test]
     </span><span class="kw">fn </span>test_matrix_3_array_stuff(){
-        <span class="kw">let </span>m = Matrix3D::default();
-        <span class="macro">assert_eq!</span>(m.n[<span class="number">0</span>][<span class="number">0</span>], <span class="number">0.0</span>);
+        <span class="kw">let </span><span class="kw-2">mut </span>m = Matrix3D::index_test();
+        <span class="comment">//Test that we can access the matrix using the index trait in row major order
+        </span><span class="macro">assert_eq!</span>(m[(<span class="number">0</span>,<span class="number">0</span>)], <span class="number">0.0</span>);
+        <span class="macro">assert_eq!</span>(m[(<span class="number">0</span>,<span class="number">1</span>)], <span class="number">1.0</span>);
+        <span class="macro">assert_eq!</span>(m[(<span class="number">0</span>,<span class="number">2</span>)], <span class="number">2.0</span>);
+        <span class="macro">assert_eq!</span>(m[(<span class="number">1</span>,<span class="number">0</span>)], <span class="number">3.0</span>);
+        <span class="macro">assert_eq!</span>(m[(<span class="number">1</span>,<span class="number">1</span>)], <span class="number">4.0</span>);
+        <span class="macro">assert_eq!</span>(m[(<span class="number">1</span>,<span class="number">2</span>)], <span class="number">5.0</span>);
+        <span class="macro">assert_eq!</span>(m[(<span class="number">2</span>,<span class="number">0</span>)], <span class="number">6.0</span>);
+        <span class="macro">assert_eq!</span>(m[(<span class="number">2</span>,<span class="number">1</span>)], <span class="number">7.0</span>);
+        <span class="macro">assert_eq!</span>(m[(<span class="number">2</span>,<span class="number">2</span>)], <span class="number">8.0</span>);
+
+        <span class="comment">//Test Indedx Mut
+        </span>m[(<span class="number">0</span>,<span class="number">0</span>)] = <span class="number">10.0</span>;
+        <span class="macro">assert_eq!</span>(m[(<span class="number">0</span>,<span class="number">0</span>)], <span class="number">10.0</span>);
+        
         
     }
 }</code></pre></div></section></main></body></html>
