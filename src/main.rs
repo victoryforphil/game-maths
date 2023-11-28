@@ -22,6 +22,8 @@ fn main() {
     .unwrap();
         let t_vec = maths::Vector3D::default();
         info!("Game Maths: {:?}", t_vec);
+        let t_mat = maths::Matrix3D::default();
+        info!("Game Maths: {:?}", t_mat);
     info!("Game Maths: Hello world!")
 }
 

@@ -1,6 +1,8 @@
 mod vector_3;
+mod matrix_3;
 
 pub use vector_3::Vector3D;
+pub use matrix_3::Matrix3D;
 
 #[derive(Debug, PartialEq)]
 pub struct Maths;
