@@ -1,5 +1,5 @@
+#[derive(Debug, PartialEq)]
 pub struct Maths;
-
 impl Maths {
     pub fn new() -> Self {
         Self
