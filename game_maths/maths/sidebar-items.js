@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"struct":["Maths","Vector3D"]};
+window.SIDEBAR_ITEMS = {"struct":["Maths","Matrix3D","Vector3D"]};
