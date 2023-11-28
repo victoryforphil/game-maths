@@ -2,7 +2,7 @@
 
 use std::fs::File;
 
-use game_maths::maths::Maths;
+use game_maths::maths::{Maths, self};
 use log::{LevelFilter, info};
 use simplelog::{ColorChoice, CombinedLogger, Config, TermLogger, TerminalMode, WriteLogger};
 fn main() {
@@ -20,6 +20,17 @@ fn main() {
         ),
     ])
     .unwrap();
-let _maths = Maths   ::new();
+        let t_vec = maths::Vector3D::default();
+        info!("Game Maths: {:?}", t_vec);
     info!("Game Maths: Hello world!")
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_main() {
+        main();
+    }
 }

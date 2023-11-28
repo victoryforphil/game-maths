@@ -1,3 +1,7 @@
+mod vector_3;
+
+pub use vector_3::Vector3D;
+
 #[derive(Debug, PartialEq)]
 pub struct Maths;
 impl Maths {
