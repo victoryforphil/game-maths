@@ -29,27 +29,11 @@ impl Default for Matrix3D {
 
 impl Debug for Matrix3D {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-        /// Print matrix in row major order
-        /// [ 0 1 2 ]
-        /// [ 3 4 5 ]
-        /// [ 6 7 8 ]
-        /// 
         //TODO: Make this a dynamic utility function (AlexC / victoryforphil)
-        write!(f, "\n[ ")?;
-        write!(f, "{} ", self.n[0][0])?;
-        write!(f, "{} ", self.n[0][1])?;
-        write!(f, "{} ", self.n[0][2])?;
-        write!(f, "]\n")?;
-        write!(f, "[ ")?;
-        write!(f, "{} ", self.n[1][0])?;
-        write!(f, "{} ", self.n[1][1])?;
-        write!(f, "{} ", self.n[1][2])?;
-        write!(f, "]\n")?;
-        write!(f, "[ ")?;
-        write!(f, "{} ", self.n[2][0])?;
-        write!(f, "{} ", self.n[2][1])?;
-        write!(f, "{} ", self.n[2][2])?;
-        write!(f, "]")?;
+        write!(f, " Row: \t \t Col (mem):\n\t [{:?} {:?} {:?}] \t [{:?} {:?} {:?}]  \n", self[(0,0)], self[(0,1)], self[(0,2)], self.n[0][0], self.n[0][1],  self.n[0][2])?;
+        write!(f, "\t [{:?} {:?} {:?}] \t [{:?} {:?} {:?}] \n", self[(1,0)], self[(1,1)], self[(1,2)], self.n[1][0], self.n[1][1],  self.n[1][2])?;
+        write!(f, "\t [{:?} {:?} {:?}] \t [{:?} {:?} {:?}] \n", self[(2,0)], self[(2,1)], self[(2,2)], self.n[2][0], self.n[0][1],  self.n[2][2])?;
+
         Ok(())
         
     }
@@ -78,13 +62,11 @@ impl Matrix3D {
     pub fn new( n00:f64,n01:f64,n02:f64,
                 n10:f64,n11:f64,n12:f64,
                 n20:f64,n21:f64,n22:f64) -> Self {
-        Self {
-            n: [
-                [n00, n10, n20],
-                [n01, n11, n21],
-                [n02, n12, n22]
-            ]
-        }
+        let mut m = Self::default();
+        m.n[0][0] = n00; m.n[0][1] = n10; m.n[0][2] = n20;
+        m.n[1][0] = n01; m.n[1][1] = n11; m.n[1][2] = n21;
+        m.n[2][0] = n02; m.n[2][1] = n12; m.n[2][2] = n22;
+        m
     }
 
     /// Create a matrix from 3 vectors
@@ -112,7 +94,7 @@ impl Matrix3D {
     /// ```
     pub fn new_vectors( v0:Vector3D,v1:Vector3D,v2:Vector3D) -> Self {
         let mut m = Self::default();
-        m.n[0][0] = v0.x; m.n[1][0] = v1.x; m.n[2][0] = v2.x;
+        m.n[0][0] = v0.x; m.n[0][1] = v0.y; m.n[0][2] = v0.z;
         m.n[1][0] = v1.x; m.n[1][1] = v1.y; m.n[1][2] = v1.z;
         m.n[2][0] = v2.x; m.n[2][1] = v2.y; m.n[2][2] = v2.z;
 
@@ -151,22 +133,60 @@ mod tests {
     fn test_matrix_3() {
         let matrix_3 = Matrix3D::default();
         info!("Game Maths: {:?}", matrix_3);
+
+        let matrix_index = Matrix3D::index_test();
+        let matrix_new = Matrix3D::new(0.0,1.0,2.0,
+                                       3.0,4.0,5.0,
+                                       6.0,7.0,8.0);
+        assert_eq!(matrix_index, matrix_new);
+    }
+
+    #[test]
+    fn test_matrix_3_vector(){
+        let matrix_vectors = Matrix3D::new_vectors(
+            Vector3D::new(0.0,1.0,2.0),
+            Vector3D::new(3.0,4.0,5.0),
+            Vector3D::new(6.0,7.0,8.0)
+        );
+        assert_eq!(matrix_vectors.n[0], [0.0,1.0,2.0]);
+        assert_eq!(matrix_vectors.n[1], [3.0,4.0,5.0]);
+        assert_eq!(matrix_vectors.n[2], [6.0,7.0,8.0]);
     }
     #[test]
     fn test_matrix_3_order_test() {
-        let matrix_3 = Matrix3D::new(0.0,1.0,2.0,
-                                     3.0,4.0,5.0,
-                                     6.0,7.0,8.0);
-
+        let matrix_3 = Matrix3D::index_test();
       
         info!("Game Maths: {:?}", matrix_3);
+        // Test that we store the matrix in column major order
+        assert_eq!(matrix_3.n[0][0], 0.0);
+        assert_eq!(matrix_3.n[1][0], 1.0);
         assert_eq!(matrix_3.n[2][0], 2.0);
+        assert_eq!(matrix_3.n[0][1], 3.0);
+        assert_eq!(matrix_3.n[1][1], 4.0);
+        assert_eq!(matrix_3.n[2][1], 5.0);
         assert_eq!(matrix_3.n[0][2], 6.0);
+        assert_eq!(matrix_3.n[1][2], 7.0);
+        assert_eq!(matrix_3.n[2][2], 8.0);
+
     }
     #[test]
     fn test_matrix_3_array_stuff(){
-        let m = Matrix3D::default();
-        assert_eq!(m.n[0][0], 0.0);
+        let mut m = Matrix3D::index_test();
+        //Test that we can access the matrix using the index trait in row major order
+        assert_eq!(m[(0,0)], 0.0);
+        assert_eq!(m[(0,1)], 1.0);
+        assert_eq!(m[(0,2)], 2.0);
+        assert_eq!(m[(1,0)], 3.0);
+        assert_eq!(m[(1,1)], 4.0);
+        assert_eq!(m[(1,2)], 5.0);
+        assert_eq!(m[(2,0)], 6.0);
+        assert_eq!(m[(2,1)], 7.0);
+        assert_eq!(m[(2,2)], 8.0);
+
+        //Test Indedx Mut
+        m[(0,0)] = 10.0;
+        assert_eq!(m[(0,0)], 10.0);
+        
         
     }
 }
