@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"game_maths":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.74.0/core/ops/index/trait.IndexMut.html\" title=\"trait core::ops::index::IndexMut\">IndexMut</a>&lt;<a class=\"primitive\" href=\"https://doc.rust-lang.org/1.74.0/std/primitive.usize.html\">usize</a>&gt; for <a class=\"struct\" href=\"game_maths/maths/struct.Vector3D.html\" title=\"struct game_maths::maths::Vector3D\">Vector3D</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

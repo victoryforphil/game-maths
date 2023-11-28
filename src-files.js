@@ -1,6 +1,6 @@
 var srcIndex = JSON.parse('{\
 "deranged":["",[],["lib.rs","traits.rs"]],\
-"game_maths":["",[["maths",[],["mod.rs"]]],["lib.rs"]],\
+"game_maths":["",[["maths",[],["mod.rs","vector_3.rs"]]],["lib.rs"]],\
 "itoa":["",[],["lib.rs","udiv128.rs"]],\
 "libc":["",[["unix",[["linux_like",[["linux",[["arch",[["generic",[],["mod.rs"]]],["mod.rs"]],["gnu",[["b64",[["x86_64",[],["align.rs","mod.rs","not_x32.rs"]]],["mod.rs"]]],["align.rs","mod.rs"]]],["align.rs","mod.rs","non_exhaustive.rs"]]],["mod.rs"]]],["align.rs","mod.rs"]]],["fixed_width_ints.rs","lib.rs","macros.rs"]],\
 "log":["",[],["__private_api.rs","lib.rs","macros.rs"]],\
