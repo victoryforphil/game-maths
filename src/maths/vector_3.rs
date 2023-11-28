@@ -1,6 +1,6 @@
 use std::{
     fmt::Debug,
-    ops::{Index, IndexMut, Mul, DivAssign, MulAssign, Div, Add, Sub},
+    ops::{Index, IndexMut, Mul, DivAssign, MulAssign, Div, Add, Sub, Neg},
 };
 
 #[derive(Clone, Copy)]
@@ -132,6 +132,28 @@ impl MulAssign<f64> for Vector3D {
         self.z *= s;
     }
 }
+
+/// Negation for Vector3D
+/// 
+/// # Example
+/// ```
+/// use game_maths::maths::Vector3D;
+/// 
+/// let vector_3d = Vector3D::new(1.0, 2.0, 3.0);
+/// let vector_3d = -vector_3d;
+/// assert_eq!(vector_3d, [-1.0, -2.0, -3.0].into());
+/// ```
+impl Neg for Vector3D {
+    type Output = Self;
+    fn neg(self) -> Self::Output {
+        Self {
+            x: -self.x, 
+            y: -self.y, 
+            z: -self.z,
+        }
+    }
+}
+
 /// Scalar division for Vector3D
 /// 
 /// # Example
@@ -397,5 +419,12 @@ mod tests {
         let vector_3d = Vector3D::new(1.0, 2.0, 3.0);
         let vector_3d = vector_3d - Vector3D::new(1.0, 2.0, 3.0);
         assert_eq!(vector_3d, [0.0, 0.0, 0.0].into());
+    }
+
+    #[test]
+    fn test_vector_3d_neg() {
+        let vector_3d = Vector3D::new(1.0, 2.0, 3.0);
+        let vector_3d = -vector_3d;
+        assert_eq!(vector_3d, [-1.0, -2.0, -3.0].into());
     }
 }
