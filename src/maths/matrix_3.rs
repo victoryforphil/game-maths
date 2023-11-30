@@ -1,4 +1,4 @@
-use std::{fmt::{Debug, Formatter, self}, ops::{IndexMut, Index}};
+use std::{fmt::{Debug, Formatter, self}, ops::{IndexMut, Index, Mul}};
 
 use super::Vector3D;
 
@@ -57,6 +57,48 @@ impl IndexMut<(usize, usize)> for Matrix3D {
         &mut self.n[col][row]
     }
 }
+/// Matrix multiplication
+/// 
+/// # Example
+/// ```
+/// use game_maths::maths::Matrix3D;
+/// 
+/// let m = Matrix3D::index_test();
+/// let m2 = m.clone();
+/// 
+/// /// m3
+/// /// [15.0 18.0 21.0]
+/// /// [42.0 54.0 66.0]
+/// /// [69.0 90.0 111.0]
+/// let m3 = m * m2;
+/// ```
+impl Mul for Matrix3D {
+    type Output = Self;
+
+    fn mul(self, rhs: Self) -> Self::Output {
+        let mut m = Self::default();
+        for i in 0..3 { // Row
+            for j in 0..3 { // Col
+                m[(i,j)] = self[(i,0)] * rhs[(0,j)] + self[(i,1)] * rhs[(1,j)] + self[(i,2)] * rhs[(2,j)];
+            }
+        }
+        m
+    }
+}
+
+impl Mul<Vector3D> for Matrix3D {
+    type Output = Vector3D;
+
+    fn mul(self, rhs: Vector3D) -> Self::Output {
+        Vector3D::new(
+            self[(0,0)] * rhs.x + self[(0,1)] * rhs.y + self[(0,2)] * rhs.z,
+            self[(1,0)] * rhs.x + self[(1,1)] * rhs.y + self[(1,2)] * rhs.z,
+            self[(2,0)] * rhs.x + self[(2,1)] * rhs.y + self[(2,2)] * rhs.z,
+        )
+    }
+}
+
+
 
 impl Matrix3D {
     pub fn new( n00:f64,n01:f64,n02:f64,
@@ -172,6 +214,7 @@ mod tests {
     #[test]
     fn test_matrix_3_array_stuff(){
         let mut m = Matrix3D::index_test();
+        info!("Game Maths: {:?}", m);
         //Test that we can access the matrix using the index trait in row major order
         assert_eq!(m[(0,0)], 0.0);
         assert_eq!(m[(0,1)], 1.0);
@@ -187,6 +230,39 @@ mod tests {
         m[(0,0)] = 10.0;
         assert_eq!(m[(0,0)], 10.0);
         
+        
+    }
+
+    #[test]
+    fn test_matrix_3_multiplication(){
+
+
+        let m = Matrix3D::index_test();
+        let m2 = m.clone();
+
+        let m3 = m * m2;
+
+        // Matrix m         Matrix m2       Matrix m3
+        //
+        // [0.0 1.0 2.0]   [0.0 1.0 2.0]   [15.0 18.0 21.0]
+        // [3.0 4.0 5.0] * [3.0 4.0 5.0] = [42.0 54.0 66.0]
+        // [6.0 7.0 8.0]   [6.0 7.0 8.0]   [69.0 90.0 111.0]
+
+        assert_eq!(m3[(0,0)], 15.0); assert_eq!(m3[(0,1)], 18.0); assert_eq!(m3[(0,2)], 21.0);
+        assert_eq!(m3[(1,0)], 42.0); assert_eq!(m3[(1,1)], 54.0); assert_eq!(m3[(1,2)], 66.0);
+        assert_eq!(m3[(2,0)], 69.0); assert_eq!(m3[(2,1)], 90.0); assert_eq!(m3[(2,2)], 111.0);
+
+        let v = Vector3D::new(1.0,2.0,3.0);
+        let m4 = m * v;
+
+        // Matrix m         Vector v       Vector m4
+        // [0.0 1.0 2.0]   [1.0]   =       [8.0]
+        // [3.0 4.0 5.0] * [2.0]   =       [26.0]
+        // [6.0 7.0 8.0]   [3.0]   =       [44.0]
+
+        assert_eq!(m4.x, 8.0);
+        assert_eq!(m4.y, 26.0);
+        assert_eq!(m4.z, 44.0);
         
     }
 }
