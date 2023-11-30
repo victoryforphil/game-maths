@@ -318,6 +318,20 @@ impl Vector3D {
             z: self.z / magnitude,
         }
     }
+
+    /// Returns the dot product of two Vector3Ds
+    /// 
+    /// # Example
+    /// ```
+    /// use game_maths::maths::Vector3D;
+    /// 
+    /// let vector_3d = Vector3D::new(1.0, 2.0, 3.0);
+    /// let other_vector_3d = Vector3D::new(1.0, 2.0, 3.0);
+    /// assert_eq!(vector_3d.dot(&other_vector_3d), 14.0);
+    /// ```
+    pub fn dot(&self, other: &Self) -> f64 {
+        self.x * other.x + self.y * other.y + self.z * other.z
+    }
 }
 
 #[cfg(test)]
@@ -408,6 +422,11 @@ mod tests {
         let normalised_vector_3d = vector_3d.normalise();
         assert_eq!(normalised_vector_3d, [0.6666666666666666, 0.6666666666666666, 0.3333333333333333].into());
         assert_eq!(normalised_vector_3d.magnitude(), 1.0);
+
+        // Dot product
+        let vector_3d = Vector3D::new(1.0, 2.0, 3.0);
+        let other_vector_3d = Vector3D::new(1.0, 2.0, 3.0);
+        assert_eq!(vector_3d.dot(&other_vector_3d), 14.0);
     }
 
     #[test]
