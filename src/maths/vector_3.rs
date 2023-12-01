@@ -332,6 +332,24 @@ impl Vector3D {
     pub fn dot(&self, other: &Self) -> f64 {
         self.x * other.x + self.y * other.y + self.z * other.z
     }
+
+    /// Returns the cross product of two Vector3Ds
+    /// 
+    /// # Example
+    /// ```
+    /// use game_maths::maths::Vector3D;
+    /// 
+    /// let vector_3d = Vector3D::new(1.0, 2.0, 3.0);
+    /// let other_vector_3d = Vector3D::new(1.0, 2.0, 3.0);
+    /// assert_eq!(vector_3d.cross(&other_vector_3d), [0.0, 0.0, 0.0].into());
+    /// ```
+    pub fn cross(&self, other: &Self) -> Self {
+        Self {
+            x: self.y * other.z - self.z * other.y, 
+            y: self.z * other.x - self.x * other.z, 
+            z: self.x * other.y - self.y * other.x,
+        }
+    }
 }
 
 #[cfg(test)]
@@ -373,10 +391,7 @@ mod tests {
         assert_eq!(vector_3d[0], 1.0);
         assert_eq!(vector_3d[1], 2.0);
         assert_eq!(vector_3d[2], 3.0);
-    }
 
-    #[test]
-    fn test_vector_3d_index_mut() {
         let mut vector_3d = Vector3D::new(1.0, 2.0, 3.0);
         vector_3d[0] = 4.0;
         vector_3d[1] = 5.0;
@@ -385,6 +400,7 @@ mod tests {
         assert_eq!(vector_3d[1], 5.0);
         assert_eq!(vector_3d[2], 6.0);
     }
+
 
     #[test]
     fn test_vector_3d_into() {
@@ -445,5 +461,12 @@ mod tests {
         let vector_3d = Vector3D::new(1.0, 2.0, 3.0);
         let vector_3d = -vector_3d;
         assert_eq!(vector_3d, [-1.0, -2.0, -3.0].into());
+    }
+
+    #[test]
+    fn test_vector_3d_cross() {
+        let vector_3d = Vector3D::new(1.0, 2.0, 3.0);
+        let other_vector_3d = Vector3D::new(1.0, 2.0, 3.0);
+        assert_eq!(vector_3d.cross(&other_vector_3d), [0.0, 0.0, 0.0].into());
     }
 }
